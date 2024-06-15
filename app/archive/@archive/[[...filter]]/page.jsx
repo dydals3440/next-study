@@ -32,6 +32,14 @@ export default function FilteredNewsPage({ params }) {
 	if (news && news.length > 0) {
 		newsContent = <NewsList news={news} />;
 	}
+	// 연도를 선택하고, 사용가능한 연도에 속해있지 않다면
+	if (
+		(selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+		(selectedMonth &&
+			!getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+	) {
+		throw new Error('Invalid filter!');
+	}
 
 	return (
 		<>
