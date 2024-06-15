@@ -1,14 +1,19 @@
 import Link from 'next/link';
+import { NavLink } from './nav-link';
 
 export function MainHeader() {
 	return (
 		<header id="main-header">
-			<ul id="logo">
+			<div id="logo">
+				<Link href="/">NextNews</Link>
+			</div>
+			<ul>
 				<li>
-					<Link href="/">Home</Link>
+					{/* href='/news' 이런식으로 클라컴포 분리가능 */}
+					<NavLink href="/news">News</NavLink>
 				</li>
 				<li>
-					<Link href="/news">News</Link>
+					<NavLink href="/archive">Archive</NavLink>
 				</li>
 			</ul>
 		</header>
