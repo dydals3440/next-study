@@ -1,5 +1,6 @@
-import { DUMMY_NEWS } from '@/dummy-news';
 import { notFound } from 'next/navigation';
+
+import { DUMMY_NEWS } from '@/dummy-news';
 
 export default function ImagePage({ params }) {
 	const newsItemSlug = params.slug;
@@ -8,6 +9,7 @@ export default function ImagePage({ params }) {
 	if (!newsItem) {
 		notFound();
 	}
+	console.log(newsItem.image);
 
 	return (
 		<div className="fullscreen-image">
