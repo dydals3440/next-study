@@ -10,9 +10,9 @@ import { NewsList } from '@/components/news-list';
 import { getLatestNews } from '@/lib/news';
 
 //  라우트가 현재 로딩된 경로에 대해 더 구체적인 컨텐츠가 없을 떄
-export default function LatestNewsPage() {
-	const latestNews = getLatestNews();
-	console.log(latestNews);
+export default async function LatestNewsPage() {
+	const latestNews = await getLatestNews();
+
 	return (
 		<>
 			<h2>Latest News</h2>

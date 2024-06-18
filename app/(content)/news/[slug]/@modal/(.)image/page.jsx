@@ -1,14 +1,11 @@
-'use client';
+import { notFound } from 'next/navigation';
 
-import { notFound, useRouter } from 'next/navigation';
+import ModalBackDrop from '@/components/modal-backdrop';
+import { getNewsItem } from '@/lib/news';
 
-import { DUMMY_NEWS } from '@/dummy-news';
-
-export default function InterceptedImagePage({ params }) {
-	const router = useRouter();
-
+export default async function InterceptedImagePage({ params }) {
 	const newsItemSlug = params.slug;
-	const newsItem = DUMMY_NEWS.find(newsItem => newsItem.slug === newsItemSlug);
+	const newsItem = await getNewsItem(newsItemSlug);
 
 	if (!newsItem) {
 		notFound();
@@ -16,8 +13,7 @@ export default function InterceptedImagePage({ params }) {
 
 	return (
 		<>
-			{/* 여기서 실행시키는게 아니므로, router.back으로 뒤로가게 설정 */}
-			<div className="modal-backdrop" onClick={router.back} />
+			<ModalBackDrop />
 			<h1>Intercept</h1>
 			<dialog className="modal" open>
 				<div className="fullscreen-image">

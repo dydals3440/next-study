@@ -7,7 +7,7 @@ import {
 } from '@/lib/news';
 import Link from 'next/link';
 
-export default function FilteredNewsPage({ params }) {
+export default async function FilteredNewsPage({ params }) {
 	const filter = params.filter;
 	// filter가 정의되있으면 [0]
 	// 즉 아래 처럼 요약 가능(filter ? filter[0] : undefined)
@@ -15,15 +15,15 @@ export default function FilteredNewsPage({ params }) {
 	const selectedMonth = filter?.[1];
 
 	let news;
-	let links = getAvailableNewsYears();
+	let links = await getAvailableNewsYears();
 
 	if (selectedYear && !selectedMonth) {
-		news = getNewsForYear(selectedYear);
+		news = await getNewsForYear(selectedYear);
 		links = getAvailableNewsMonths(selectedYear);
 	}
 
 	if (selectedYear && selectedMonth) {
-		news = getNewsForYearAndMonth(selectedYear, selectedMonth);
+		news = await getNewsForYearAndMonth(selectedYear, selectedMonth);
 		links = [];
 	}
 
@@ -33,10 +33,12 @@ export default function FilteredNewsPage({ params }) {
 		newsContent = <NewsList news={news} />;
 	}
 	// 연도를 선택하고, 사용가능한 연도에 속해있지 않다면
+	const availableYears = await getAvailableNewsYears();
+
 	if (
-		(selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+		(selectedYear && !availableYears.includes(selectedYear)) ||
 		(selectedMonth &&
-			!getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+			!getAvailableNewsMonths(selectedYear).includes(selectedMonth))
 	) {
 		throw new Error('Invalid filter!');
 	}
